@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        push_button.setOnClickListener { doIt() }
+        push_button.setOnClickListener { async() }
     }
 
     fun doIt() {
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             println("Hello")
         }
 
-        Thread.sleep(2000) // wait for 2 seconds
+//        Thread.sleep(2000) // wait for 2 seconds
         println("Stop")
 
     }
@@ -39,4 +39,22 @@ class MainActivity : AppCompatActivity() {
 
         println(value.get())
     }
+
+    fun async() {
+        println("Start")
+
+        val deferred = (1..1_000_000).map { n ->
+            GlobalScope.async {
+                n
+            }
+        }
+
+        runBlocking {
+            val sum = deferred.sumBy { it.await() }
+            println("sum: $sum")
+        }
+
+        println("Stop")
+    }
+
 }
