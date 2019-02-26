@@ -2,17 +2,28 @@ package com.prilaga.kotlintest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import java.util.concurrent.atomic.AtomicLong
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        val TAG = "new_test"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        push_button.setOnClickListener { async() }
+        push_button.setOnClickListener {
+//            async()
+            rxTest()
+        }
     }
 
     fun doIt() {
@@ -55,6 +66,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         println("Stop")
+    }
+
+    fun rxTest() {
+        Observable.just("Test")
+            .map {
+               Log.d(TAG, Thread.currentThread().getName())
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.computation())
+            .map {
+                // blurImageSync(it)
+                Log.d(TAG, Thread.currentThread().getName())
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                // displayImage(it)
+                Log.d(TAG, Thread.currentThread().getName())
+            }
+
     }
 
 }
