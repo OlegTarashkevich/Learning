@@ -6,15 +6,12 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
-import java.lang.Runnable
 import java.util.concurrent.atomic.AtomicLong
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,9 +24,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         push_button.setOnClickListener {
-//            async()
-//            rxTest()
-            testSubject()
+            // async()
+            // rxTest()
+//            testSubject()
+            coroutinesTest()
         }
     }
 
@@ -75,6 +73,28 @@ class MainActivity : AppCompatActivity() {
         println("Stop")
     }
 
+    fun coroutinesTest() {
+        GlobalScope.launch(Dispatchers.IO) {
+
+            //            val image = api.fetchImageAsync(url).await()
+            logThread("Dispatchers.IO")
+            delay(1000)
+
+            val blurred = withContext(Dispatchers.Default) {
+                //                image.blur()
+                delay(1000)
+                logThread("Dispatchers.Default")
+            }
+
+//            withContext(Dispatchers.Main) {
+//                blurred
+////                delay(1000)
+//                logThread("Dispatchers.Main")
+//            }
+        }
+
+    }
+
     fun rxTest() {
         Observable.just("Test")
             .map {
@@ -96,6 +116,7 @@ class MainActivity : AppCompatActivity() {
 
     fun testSubject() {
         val subject = BehaviorSubject.create<Any>()
+
         subject
             .doOnNext { logThread("doOnNext") }
             .subscribeOn(Schedulers.io())
@@ -105,15 +126,14 @@ class MainActivity : AppCompatActivity() {
                     logThread("onComplete")
                 }
 
-                override fun onError(e: Throwable) {
-
-                }
-
+                override fun onError(e: Throwable) {}
                 override fun onNext(o: Any) {
                     logThread("onNext")
                 }
             })
+
         subject.onNext("str")
+
         val handler = Handler()
         handler.postDelayed({ subject.onNext("str") }, 1000)
         handler.postDelayed({ subject.onNext("str") }, 2000)
