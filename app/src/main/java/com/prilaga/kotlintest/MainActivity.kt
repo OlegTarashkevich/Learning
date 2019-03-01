@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun coroutinesTest() {
-        GlobalScope.launch(Dispatchers.IO) {
+        val job: Job = GlobalScope.launch(Dispatchers.IO) {
 
             //            val image = api.fetchImageAsync(url).await()
             logThread("Dispatchers.IO")
@@ -91,7 +91,32 @@ class MainActivity : AppCompatActivity() {
 ////                delay(1000)
 //                logThread("Dispatchers.Main")
 //            }
+
+//            yield()
+
+            runBlocking {
+                delay(1000)
+                logThread("runBlocking()")
+            }
         }
+
+        job.start()
+        logThread("job.start()")
+    }
+
+    fun test2() {
+        GlobalScope.launch {
+            delay(1000L)
+            logThread("runBlocking()")
+
+            val job = GlobalScope.launch {
+                delay(1000L)
+                logThread("runBlocking()")
+            }
+
+            job.join()
+        }
+
 
     }
 
