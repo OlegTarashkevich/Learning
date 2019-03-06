@@ -11,7 +11,6 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.test.withTestContext
 import java.util.concurrent.atomic.AtomicLong
 
 class MainActivity : AppCompatActivity() {
@@ -26,10 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         push_button.setOnClickListener {
             try {
-                // async()
-                // rxTest()
-//            testSubject()
-                test8()
+                test12()
             } catch (e: Throwable) {
                 e.printStackTrace()
             }
@@ -139,11 +135,11 @@ class MainActivity : AppCompatActivity() {
                 logThread("Dispatchers.Default")
             }
 
-//            withContext(Dispatchers.Main) {
-//                blurred
-////                delay(1000)
-//                logThread("Dispatchers.Main")
-//            }
+            withContext(Dispatchers.Main) {
+                blurred
+//                delay(1000)
+                logThread("Dispatchers.Main")
+            }
 
 //            yield()
 
@@ -261,7 +257,7 @@ class MainActivity : AppCompatActivity() {
             logThread("test8 3")
             "value_2"
         }
-        val value3 = withContext(Dispatchers.Default) {
+        val value3 = withContext(Dispatchers.IO) {
             logThread("test8 4")
             "$value1 and $value2"
         }
@@ -272,6 +268,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Cancellation & timeouts
+     * https://github.com/Kotlin/kotlinx.coroutines/blob/master/docs/cancellation-and-timeouts.md#cancellation-and-timeouts
      */
 
     fun test9() = runBlocking {
@@ -291,5 +288,67 @@ class MainActivity : AppCompatActivity() {
         logThread("test9 3")
     }
 
+    // Cancellation is cooperative
+    fun test10() = runBlocking {
+        val startTime = System.currentTimeMillis();
+        val job = GlobalScope.launch(Dispatchers.Default) {
+            var nextPrintTime = startTime
+            var i = 0
+            while (i < 5) { // computation loop, just wastes CPU
+                // print a message twice a second
+                if (System.currentTimeMillis() >= nextPrintTime) {
+                    logThread("I'm sleeping ${i++} ...")
+                    nextPrintTime += 500L
+                }
+            }
+        }
+
+        delay(1300L) // delay a bit
+        logThread("main: I'm tired of waiting!")
+        job.cancelAndJoin() // cancels the job and waits for its completion
+        logThread("main: Now I can quit.")
+    }
+
+    // Closing resources with finally
+    fun test11() = runBlocking {
+        val job = launch {
+            try {
+                repeat(1000) { i ->
+                    logThread("I'm sleeping $i ...")
+                    delay(500L)
+                }
+            } catch (e: Throwable) {
+                logThread(e.toString())
+            } finally {
+                logThread("I'm running finally")
+            }
+        }
+        delay(1300L) // delay a bit
+        logThread("main: I'm tired of waiting!")
+        job.cancelAndJoin() // cancels the job and waits for its completion
+        logThread("main: Now I can quit.")
+    }
+
+    fun test12() = runBlocking {
+
+        val job = launch {
+            try {
+                repeat(1000) { i ->
+                    logThread("I'm sleeping $i ...")
+                    delay(500L)
+                }
+            } finally {
+                logThread("I'm running finally")
+                delay(1000L)
+                logThread("And I've just delayed for 1 sec because I'm non-cancellable")
+            }
+        }
+
+        delay(1300L) // delay a bit
+        logThread("main: I'm tired of waiting!")
+        job.cancelAndJoin() // cancels the job and waits for its completion
+        logThread("main: Now I can quit.")
+
+    }
 
 }
