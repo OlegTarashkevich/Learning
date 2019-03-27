@@ -1,4 +1,4 @@
-package com.prilaga.kotlintest.education;
+package com.prilaga.news.education;
 
 import java.io.File;
 import java.io.FileFilter;

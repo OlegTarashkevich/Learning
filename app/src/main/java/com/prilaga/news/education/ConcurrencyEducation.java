@@ -1,4 +1,4 @@
-package com.prilaga.kotlintest.education;
+package com.prilaga.news.education;
 
 import android.util.Log;
 

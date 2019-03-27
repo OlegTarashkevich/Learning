@@ -1,9 +1,13 @@
-package com.prilaga.kotlintest
+package com.prilaga.news.ui
 
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.prilaga.news.R
+import com.prilaga.news.education.delegate.BaseImpl
+import com.prilaga.news.education.delegate.Derived
+import com.prilaga.news.education.delegate.Openable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -30,6 +34,22 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun delegateLesson() {
+        val b = BaseImpl(10)
+        b.printIt()
+
+        val o = object : Openable {
+            var z: String? = null
+            override fun openIt() {
+                print("open $z")
+            }
+        }
+
+        val d = Derived(b, o)
+        d.printIt()
+        d.openIt()
     }
 
     fun rxTest() {
