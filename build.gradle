@@ -30,9 +30,29 @@ task clean(type: Delete) {
 ext {
     rxandroid = '2.1.0'
     rxjava = '2.1.7'
-
-    retrofitVersion = '2.5.0'
-    converterMoshiVersion = '2.5.0'
-    retrofitCoroutinesVersion = '0.9.2'
-
+    koin_version = '2.0.0-rc-1'
+    retrofit_version = '2.5.0'
+    converter_moshi_version = '2.5.0'
+    retrofit_coroutines_version = '0.9.2'
 }
+
+/**
+
+  Plan to learn:
+ 1. MVVM (ViewModel with LiveData)
+ 2. androidx
+ 3. Koin
+ 4. Kotlin
+ 5. Coroutines
+ 6. Moshi
+ 7. Retrofit + Coroutines
+ 8. Room + Coroutines
+ 9. LiveData
+ 10. Paging
+ 11. ViewPager 2
+ 12. Android Navigation component
+ 13. Lifecycles
+ 14. WorkManager
+ 15. Unit tests
+
+ **/
