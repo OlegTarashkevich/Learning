@@ -10,7 +10,7 @@ import retrofit2.http.QueryMap
  * Created by Oleg Tarashkevich on 31/03/2017.
  */
 
-interface NetworkService {
+interface ApiService {
 
     @GET(V1 + ARTICLES)
     fun getArticles(@QueryMap params: Map<String, String>): Deferred<Article>

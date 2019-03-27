@@ -36,9 +36,9 @@ class Source {
         @RequestParam.Country private var country_: String? = null
     ) {
 
-        private val category: String?
-        private val language: String?
-        private val country: String?
+        val category: String?
+        val language: String?
+        val country: String?
 
         init {
             this.category = RequestParam.parameter(category_)
