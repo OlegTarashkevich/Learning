@@ -1,4 +1,4 @@
-package com.prilaga.news.ui
+package com.prilaga.news.education
 
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import kotlinx.android.synthetic.main.activity_education.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import java.util.concurrent.atomic.AtomicLong
@@ -25,7 +26,7 @@ class EducationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_education)
 
         push_button.setOnClickListener {
             try {
