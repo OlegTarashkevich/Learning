@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy
  * Created by Oleg Tarashkevich on 31/03/2017.
  */
 
-enum class API private constructor(private val baseUrl: String, private val name_: String) {
+enum class API private constructor(val baseUrl: String, val name_: String) {
 
     PRODUCTION("https://newsapi.org", "api_news"),
     MOCK("https://mock.com", "api_mock");
@@ -31,8 +31,8 @@ enum class API private constructor(private val baseUrl: String, private val name
     }
 
     companion object {
-        val API_KEY = "4c96c741e1444309ad86faafd9774f87"
-        val TAG_KEY = "API"
+        const val API_KEY = "4c96c741e1444309ad86faafd9774f87"
+        const val TAG_KEY = "API"
     }
 
 }

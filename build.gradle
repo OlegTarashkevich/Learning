@@ -30,10 +30,15 @@ task clean(type: Delete) {
 ext {
     rxandroid = '2.1.0'
     rxjava = '2.1.7'
-    koin_version = '2.0.0-rc-1'
+
+    anko_version='0.10.4'
+
+    koin_version = '2.+' // '2.0.0-rc-1'
+
     retrofit_version = '2.5.0'
     converter_moshi_version = '2.5.0'
     retrofit_coroutines_version = '0.9.2'
+    ok_http3_version = '3.14.0'
 }
 
 /**

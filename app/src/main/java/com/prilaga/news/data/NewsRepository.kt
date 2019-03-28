@@ -2,6 +2,7 @@ package com.prilaga.news.data
 
 import com.prilaga.news.data.network.RemoteDataSource
 import com.prilaga.news.data.network.model.Article
+import com.prilaga.news.data.network.model.Source
 import kotlinx.coroutines.Deferred
 
 /**
@@ -9,7 +10,12 @@ import kotlinx.coroutines.Deferred
  */
 class NewsRepository(val remoteDataSource: RemoteDataSource) : NewsDataSource {
 
-    override fun getArticles(params: Map<String, String>): Deferred<Article> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getArticles(param: Article.Param): Deferred<Article> {
+        return remoteDataSource.getArticles(param)
     }
+
+    override fun getSources(param: Source.Param): Deferred<Source> {
+        return remoteDataSource.getSources(param)
+    }
+
 }
