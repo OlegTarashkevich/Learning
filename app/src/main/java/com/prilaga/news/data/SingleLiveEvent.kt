@@ -57,6 +57,11 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
         value = null
     }
 
+    @MainThread
+    fun callWithValue(t: T) {
+        value = t
+    }
+
     companion object {
         private const val TAG = "SingleLiveEvent"
     }

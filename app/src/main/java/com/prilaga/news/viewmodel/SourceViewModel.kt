@@ -1,41 +1,40 @@
 package com.prilaga.news.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.prilaga.news.data.NewsRepository
 import com.prilaga.news.data.network.model.RequestParam
 import com.prilaga.news.data.network.model.Source
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.runBlocking
+import java.lang.RuntimeException
 
 /**
  * Created by Oleg Tarashkevich on 28/03/2019.
  */
-class SourceViewModel(val repository: NewsRepository) : ViewModel() {
+class SourceViewModel(val repository: NewsRepository) : BaseViewModel() {
 
     val sourceData = MutableLiveData<Source>()
 
-    val viewModelJob = Job()
-    val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     fun loadNews() {
-        viewModelScope.launch {
+        doWorkIO {
+            try {
 
-            val source = withContext (IO) {
                 val param = Source.param(
                     RequestParam.Category.BUSINESS,
                     RequestParam.Language.EN,
                     RequestParam.Country.US
                 )
-                 repository.getSources(param).await()
+                val source = repository.getSources(param).await()
+                doWorkInMainThread { sourceData.value = source }
+//                throw RuntimeException("test error") // for testing
+
+            } catch (e: Throwable) {
+                doWorkInMainThread { errorData.callWithValue(e) }
             }
-
-            sourceData.value = source
         }
+
     }
 
-    fun cancelJob() {
-        viewModelJob.cancel()
+    override fun onDestroyView() {
+        cancelJob()
     }
-
 }

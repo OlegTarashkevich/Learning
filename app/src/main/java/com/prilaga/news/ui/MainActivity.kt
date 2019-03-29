@@ -21,10 +21,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        lifecycle.addObserver(sourceViewModel)
+
         test_button.setOnClickListener { sourceViewModel.loadNews() }
 
         sourceViewModel.sourceData.observe(this, Observer<Source> {
 
+        })
+
+        sourceViewModel.errorData.observe(this, Observer<Throwable>{
+            it.printStackTrace()
         })
     }
 
