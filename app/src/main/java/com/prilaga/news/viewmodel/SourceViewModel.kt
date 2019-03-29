@@ -16,7 +16,7 @@ class SourceViewModel(val repository: NewsRepository) : BaseViewModel() {
 
     fun loadNews() {
         doWorkIO {
-            try {
+//            try {
 
                 val param = Source.param(
                     RequestParam.Category.BUSINESS,
@@ -27,14 +27,18 @@ class SourceViewModel(val repository: NewsRepository) : BaseViewModel() {
                 doWorkInMainThread { sourceData.value = source }
 //                throw RuntimeException("test error") // for testing
 
-            } catch (e: Throwable) {
-                doWorkInMainThread { errorData.callWithValue(e) }
-            }
+//            } catch (e: Throwable) {
+//                doWorkInMainThread { errorData.callWithValue(e) }
+//            }
         }
 
     }
 
     override fun onDestroyView() {
         cancelJob()
+    }
+
+    override fun onError(e: Throwable) {
+        println("Caught $e")
     }
 }

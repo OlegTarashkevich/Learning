@@ -16,6 +16,11 @@ open class WorkViewModel : ViewModel() {
     private var viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Main + viewModelJob)
 
+    // TODO: Check for error handling: https://kotlinlang.org/docs/reference/coroutines/exception-handling.html
+    val handler = CoroutineExceptionHandler { _, exception ->
+        onError(exception)
+    }
+
     // Do work in Default
     fun <P> doWorkDefault(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
         doCoroutineWork(doOnAsyncBlock, viewModelScope, Default)
@@ -36,7 +41,7 @@ open class WorkViewModel : ViewModel() {
         coroutineScope: CoroutineScope,
         context: CoroutineContext
     ) {
-        coroutineScope.launch {
+        coroutineScope.launch(handler) {
             withContext(context) {
                 doOnAsyncBlock.invoke(this)
             }
@@ -53,4 +58,8 @@ open class WorkViewModel : ViewModel() {
         viewModelJob.cancelChildren()
     }
 
+    open fun onError(e: Throwable){
+
+    }
+    
 }
