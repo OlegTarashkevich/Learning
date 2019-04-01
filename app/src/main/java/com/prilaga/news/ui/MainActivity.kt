@@ -2,6 +2,7 @@ package com.prilaga.news.ui
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.prilaga.news.R
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         sourceViewModel.errorData.observe(this, Observer<Throwable>{
             it.printStackTrace()
+            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
         })
     }
 

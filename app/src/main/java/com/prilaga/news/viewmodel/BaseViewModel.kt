@@ -12,8 +12,6 @@ open class BaseViewModel : WorkViewModel(), LifecycleObserver { //, KoinComponen
 
 //    val repository by inject<NewsRepository>()
 
-    val errorData = SingleLiveEvent<Throwable>()
-
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     open fun onCreateView() {
     }

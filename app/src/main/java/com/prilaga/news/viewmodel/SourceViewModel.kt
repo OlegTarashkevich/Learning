@@ -1,10 +1,11 @@
 package com.prilaga.news.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.prilaga.news.data.NewsRepository
 import com.prilaga.news.data.network.model.RequestParam
 import com.prilaga.news.data.network.model.Source
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import java.lang.RuntimeException
 
 /**
@@ -16,29 +17,21 @@ class SourceViewModel(val repository: NewsRepository) : BaseViewModel() {
 
     fun loadNews() {
         doWorkIO {
-//            try {
-
+            try {
                 val param = Source.param(
                     RequestParam.Category.BUSINESS,
                     RequestParam.Language.EN,
                     RequestParam.Country.US
                 )
+//
                 val source = repository.getSources(param).await()
                 doWorkInMainThread { sourceData.value = source }
-//                throw RuntimeException("test error") // for testing
+                throw RuntimeException("test error") // for testing
 
-//            } catch (e: Throwable) {
-//                doWorkInMainThread { errorData.callWithValue(e) }
-//            }
+            } catch (e: Throwable){
+                onError(e)
+            }
         }
-
     }
 
-    override fun onDestroyView() {
-        cancelJob()
-    }
-
-    override fun onError(e: Throwable) {
-        println("Caught $e")
-    }
 }

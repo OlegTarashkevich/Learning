@@ -1,6 +1,7 @@
 package com.prilaga.news.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.prilaga.news.data.SingleLiveEvent
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
@@ -13,12 +14,17 @@ import kotlin.coroutines.CoroutineContext
 
 open class WorkViewModel : ViewModel() {
 
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Main + viewModelJob)
+    protected var viewModelJob = Job()
+    protected val viewModelScope = CoroutineScope(Main + viewModelJob)
+    val errorData = SingleLiveEvent<Throwable>()
 
-    // TODO: Check for error handling: https://kotlinlang.org/docs/reference/coroutines/exception-handling.html
-    val handler = CoroutineExceptionHandler { _, exception ->
-        onError(exception)
+    /**
+     * TODO: Check for error handling: https://kotlinlang.org/docs/reference/coroutines/exception-handling.html
+     *
+     * Call the onError of handler in GlobalScope
+     */
+    val handler = CoroutineExceptionHandler { _, throwable ->
+        doCoroutineWork({ errorData.callWithValue(throwable) }, GlobalScope, Main)
     }
 
     // Do work in Default
@@ -36,7 +42,7 @@ open class WorkViewModel : ViewModel() {
         doCoroutineWork(doOnAsyncBlock, viewModelScope, Main)
     }
 
-    private inline fun <P> doCoroutineWork(
+    protected inline fun <P> doCoroutineWork(
         crossinline doOnAsyncBlock: suspend CoroutineScope.() -> P,
         coroutineScope: CoroutineScope,
         context: CoroutineContext
@@ -49,7 +55,7 @@ open class WorkViewModel : ViewModel() {
     }
 
     // Cancel the job and all the children. No work can be performed after cancellation.
-    fun cancelJob(){
+    fun cancelJob() {
         viewModelJob.cancel()
     }
 
@@ -58,8 +64,8 @@ open class WorkViewModel : ViewModel() {
         viewModelJob.cancelChildren()
     }
 
-    open fun onError(e: Throwable){
-
+    open fun onError(throwable: Throwable) {
+        doWorkInMainThread { errorData.callWithValue(throwable) }
     }
-    
+
 }
