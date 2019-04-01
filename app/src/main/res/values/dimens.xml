@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="tabsHeight">48dp</dimen>
+    <dimen name="dialog_padding_size">10dp</dimen>
+    <dimen name="dialog_width">300dp</dimen>
+
+    <!--banner-->
+    <item name="match_parent" type="dimen">-1</item>
+    <item name="wrap_content" type="dimen">-2</item>
+
+    <dimen name="banner_width">@dimen/match_parent</dimen>
+    <dimen name="banner_height">@dimen/wrap_content</dimen>
+
+
+    <!--font sizes-->
+    <dimen name="l_text_size">10sp</dimen>
+    <dimen name="p_text_size">12sp</dimen>
+    <dimen name="m_text_size">14sp</dimen>
+    <dimen name="h_text_size">16sp</dimen>
+    <dimen name="xh_text_size">18sp</dimen>
+    <dimen name="xh_p_text_size">20sp</dimen>
+    <dimen name="xxh_text_size">25sp</dimen>
+    <dimen name="xxxh_text_size">30sp</dimen>
+    <dimen name="y_text_size">35sp</dimen>
+
+    <!--sizes-->
+    <dimen name="l_size">5dp</dimen>
+    <dimen name="m_size">10dp</dimen>
+    <dimen name="h_size">15dp</dimen>
+    <dimen name="xh_size">20dp</dimen>
+    <dimen name="xxh_size">25dp</dimen>
+    <dimen name="xxh_p_size">30dp</dimen>
+    <dimen name="xxxh_size">40dp</dimen>
+    <dimen name="xxxhp_size">50dp</dimen>
+    <dimen name="xxxxh_size">60dp</dimen>
+    <dimen name="z_size">80dp</dimen>
+    <dimen name="zz_size">100dp</dimen>
+    <dimen name="hh_size">200dp</dimen>
+
+    <dimen name="button_padding">10dp</dimen>
+    <dimen name="button_radius">25dp</dimen>
+    <dimen name="button_margin">8dp</dimen>
+    <dimen name="button_margin_small">2dp</dimen>
+
+</resources>

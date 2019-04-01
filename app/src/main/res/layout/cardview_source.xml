@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_ripple">
+
+        <ImageView
+            android:id="@+id/source_logo_view"
+            android:layout_width="@dimen/z_size"
+            android:layout_height="@dimen/z_size"
+            tools:src="@drawable/ic_newspaper"/>
+
+        <LinearLayout
+            android:id="@+id/tag_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/source_logo_view"
+            android:layout_alignTop="@+id/source_logo_view"
+            android:layout_marginLeft="@dimen/m_size"
+            android:layout_marginStart="@dimen/m_size"
+            android:layout_toEndOf="@id/source_logo_view"
+            android:layout_toRightOf="@id/source_logo_view"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/source_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/m_text_size"
+                tools:text="Name"/>
+
+            <TextView
+                android:id="@+id/source_url_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/l_size"
+                android:autoLink="web"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/m_text_size"
+                tools:text="Name"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/source_description_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/source_logo_view"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/m_text_size"
+            tools:text="Name"/>
+
+    </RelativeLayout>
+
+</merge>

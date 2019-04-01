@@ -1,7 +1,6 @@
-package com.prilaga.news.ui
+package com.prilaga.news.view.activity
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -24,7 +23,9 @@ class MainActivity : AppCompatActivity() {
 
         lifecycle.addObserver(sourceViewModel)
 
-        test_button.setOnClickListener { sourceViewModel.loadNews() }
+        main_pager_container
+
+//        test_button.setOnClickListener { sourceViewModel.loadNews() }
 
         sourceViewModel.sourceData.observe(this, Observer<Source> {
 
