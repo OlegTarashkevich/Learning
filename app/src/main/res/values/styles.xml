@@ -1,0 +1,114 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="TextAppearanceStyle" parent="TextAppearance.AppCompat">
+        //hint color And Label Color in False State
+        <item name="android:textColorHint">@color/secondary_text</item>
+        <!--<item name="android:textSize">20sp</item>-->
+        <item name="colorAccent">@color/primary</item>
+        <item name="colorControlNormal">@color/primary</item>
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="colorControlHighlight">@color/primary</item>
+
+        <item name="android:textColorHighlight">@color/primary</item>
+        <!--<item name="textColorError">@color/red</item>-->
+        <item name="android:textColorLink">@color/green_dark</item>
+    </style>
+
+    <style name="EditTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:textSize">@dimen/xh_text_size</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Widget.TextView.SnackBarView" parent="Widget.TextView">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_ripple_white</item>
+        <item name="android:padding">@dimen/l_size</item>
+        <item name="android:textColor">@color/color_accent</item>
+        <item name="android:textSize">@dimen/xxh_text_size</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Widget.TextView.BlueIcon" parent="android:Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_ripple</item>
+        <item name="android:paddingLeft">@dimen/m_size</item>
+        <item name="android:paddingTop">@dimen/m_size</item>
+        <item name="android:paddingRight">@dimen/m_size</item>
+        <item name="android:paddingBottom">@dimen/m_size</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">@dimen/xh_p_text_size</item>
+    </style>
+
+    <style name="Widget.TextView" parent="Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="AlarmRadioButtonStyle" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:textColor">@color/main_text_color</item>-->
+        <!--<item name="android:background">@drawable/selector_main</item>-->
+    </style>
+
+    <style name="Widget.DialogPicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/primary</item>
+    </style>
+
+    <style name="Auto" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textColorHint">@color/secondary_text</item>
+    </style>
+
+    <style name="Widget.Design.TextInputLayout" parent="android:Widget">
+        <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
+        <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
+    </style>
+
+    <style name="Widget.Button" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">@dimen/h_text_size</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="colorButtonNormal">@color/primary_light</item>
+    </style>
+
+    <style name="Widget.Button.White" parent="Widget.Button">
+        <item name="colorButtonNormal">@color/white</item>
+    </style>
+
+    <style name="DialogAnimation" parent="Base.Theme.AppCompat.Dialog">
+        <item name="android:windowAnimationStyle">@style/WindowAnimation</item>
+    </style>
+
+    <style name="WindowAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
+    </style>
+
+    <style name="Widget.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/Widget.TabText</item>
+        <!--<item name="tabSelectedTextColor">@color/colorPrimaryDark</item>-->
+        <!--<item name="tabBackground">@color/black</item>-->
+        <!--<item name="tabIndicatorColor">@color/white</item>-->
+        <item name="tabIndicatorHeight">4dp</item>
+        <item name="tabPaddingStart">0dp</item>
+        <item name="tabPaddingEnd">0dp</item>
+    </style>
+
+    <style name="Widget.TabText" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">@dimen/h_text_size</item>
+        <!--<item name="android:textColor">@color/gray</item>-->
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+</resources>

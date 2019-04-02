@@ -1,5 +1,8 @@
 package com.prilaga.news.data.network.model
 
+import com.prilaga.data.serialization.BaseSettings
+import org.json.JSONObject
+
 /**
  * Created by Oleg Tarashkevich on 31/03/2017.
  */
@@ -31,42 +34,52 @@ class Source {
     }
 
     data class Param constructor(
-        @RequestParam.Category private var category_: String? = null,
-        @RequestParam.Language private var language_: String? = null,
-        @RequestParam.Country private var country_: String? = null
-    ) {
+        @RequestParam.Category var category_: String? = RequestParam.ALL,
+        @RequestParam.Language private var language_: String? = RequestParam.ALL,
+        @RequestParam.Country private var country_: String? = RequestParam.ALL
+    ) : BaseSettings() {
 
-        val category: String?
-        val language: String?
-        val country: String?
+        var category: String? = RequestParam.parameter(category_)
+        var language: String? = RequestParam.parameter(language_)
+        var country: String? = RequestParam.parameter(country_)
 
-        init {
-            this.category = RequestParam.parameter(category_)
-            this.language = RequestParam.parameter(language_)
-            this.country = RequestParam.parameter(country_)
+        override fun loadDefault() {
+            this.category = RequestParam.ALL
+            this.language = RequestParam.ALL
+            this.country = RequestParam.ALL
+        }
+
+        override fun serialize(jsonObject: JSONObject) {
+            jsonObject.put("category", category)
+            jsonObject.put("language", language)
+            jsonObject.put("country", country)
+        }
+
+        override fun deserialize(jsonObject: JSONObject) {
+            category = jsonObject.optString("category", RequestParam.ALL)
+            language = jsonObject.optString("language", RequestParam.ALL)
+            country = jsonObject.optString("country", RequestParam.ALL)
+        }
+
+        override fun classKey(): String {
+            return TAG
         }
 
         companion object {
             val TAG = "Source.Param"
+
+            fun emptyParam(): Param {
+                return param(null, null, null)
+            }
+
+            fun defaultParam(): Param {
+                return param(RequestParam.ALL, RequestParam.ALL, RequestParam.ALL)
+            }
+
+            fun param(@RequestParam.Category category: String?, @RequestParam.Language language: String?, @RequestParam.Country country: String?): Param {
+                return Param(category, language, country)
+            }
         }
     }
 
-    companion object {
-
-        fun emptyParam(): Param {
-            return param(null, null, null)
-        }
-
-        fun defaultParam(): Param {
-            return param(RequestParam.ALL, RequestParam.ALL, RequestParam.ALL)
-        }
-
-        fun param(@RequestParam.Category category: String?, @RequestParam.Language language: String?, @RequestParam.Country country: String?): Param {
-            return Param(category, language, country)
-        }
-
-        fun saveParam(param: Param) {
-
-        }
-    }
 }

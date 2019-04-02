@@ -23,22 +23,22 @@ open class WorkViewModel : ViewModel() {
      *
      * Call the onError of handler in GlobalScope
      */
-    val handler = CoroutineExceptionHandler { _, throwable ->
+    protected val handler = CoroutineExceptionHandler { _, throwable ->
         doCoroutineWork({ errorData.callWithValue(throwable) }, GlobalScope, Main)
     }
 
     // Do work in Default
-    fun <P> doWorkDefault(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
+    protected fun <P> doWorkDefault(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
         doCoroutineWork(doOnAsyncBlock, viewModelScope, Default)
     }
 
     // Do work in IO
-    fun <P> doWorkIO(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
+    protected fun <P> doWorkIO(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
         doCoroutineWork(doOnAsyncBlock, viewModelScope, IO)
     }
 
     // Do work in Main
-    fun <P> doWorkInMainThread(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
+    protected fun <P> doWorkInMainThread(doOnAsyncBlock: suspend CoroutineScope.() -> P) {
         doCoroutineWork(doOnAsyncBlock, viewModelScope, Main)
     }
 
@@ -55,16 +55,16 @@ open class WorkViewModel : ViewModel() {
     }
 
     // Cancel the job and all the children. No work can be performed after cancellation.
-    fun cancelJob() {
+    protected fun cancelJob() {
         viewModelJob.cancel()
     }
 
     // Cancel children jobs only
-    fun cancelJobChildren() {
+    protected fun cancelJobChildren() {
         viewModelJob.cancelChildren()
     }
 
-    open fun onError(throwable: Throwable) {
+    protected open fun onError(throwable: Throwable) {
         doWorkInMainThread { errorData.callWithValue(throwable) }
     }
 

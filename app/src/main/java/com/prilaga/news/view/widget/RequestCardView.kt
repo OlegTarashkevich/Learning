@@ -10,34 +10,44 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import com.prilaga.news.R
 import com.prilaga.news.data.network.API
 import com.prilaga.news.util.ViewUtil
 import com.prilaga.news.view.adapter.RequestAdapter
+import com.prilaga.news.viewmodel.SourceViewModel
 import kotlinx.android.synthetic.main.cardview_request.view.*
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 /**
  * Created by Oleg Tarashkevich on 02.04.17.
  */
 
 class RequestCardView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    CardView(context, attrs, defStyleAttr) {
+    CardView(context, attrs, defStyleAttr), LifecycleOwner, KoinComponent {
+
+    private val mLifecycleRegistry = LifecycleRegistry(this)
+    private val sourceViewUtil: SourceViewModel by inject()
 
     val category: String get() = category_edit_text!!.editableText.toString()
     val language: String get() = language_edit_text!!.editableText.toString()
     val country: String get() = country_edit_text!!.editableText.toString()
 
     init {
+        lifecycle.addObserver(sourceViewUtil)
         View.inflate(context, R.layout.cardview_request, this)
     }
 
     fun setApi(api: API) {
-        presenter.changeApi(api)
+//        presenter.changeApi(api)
     }
 
     fun refreshNews() {
-        presenter.refreshNews()
+//        presenter.refreshNews()
     }
 
     // region IRequestCardView
@@ -63,8 +73,7 @@ class RequestCardView @JvmOverloads constructor(context: Context, attrs: Attribu
         editText.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val item = (parent.adapter as RequestAdapter).getItem(position)
             editText.setText(item)
-            if (presenter != null)
-                presenter.startRequestParam()
+            sourceViewUtil.loadNews(category, language, country)
         }
 
         editText.setOnTouchListener(OnTouchListener { v, event ->
@@ -77,15 +86,10 @@ class RequestCardView @JvmOverloads constructor(context: Context, attrs: Attribu
         })
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        if (presenter != null)
-            presenter.loadRequestParam()
+    // region Lifecycle
+    override fun getLifecycle(): Lifecycle {
+        return mLifecycleRegistry
     }
+    // endregion
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        if (presenter != null)
-            presenter.unSubscribe()
-    }
 }

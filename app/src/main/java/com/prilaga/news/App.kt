@@ -1,6 +1,7 @@
 package com.prilaga.news
 
 import android.app.Application
+import com.prilaga.data.utils.DataUtil
 import com.prilaga.news.di.mvvmModule
 import com.prilaga.news.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
@@ -15,6 +16,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        DataUtil.getInstance().requiredSetup(this, "ndkKey")
 
         startKoin {
             androidLogger(Level.DEBUG)

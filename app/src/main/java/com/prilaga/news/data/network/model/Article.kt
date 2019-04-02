@@ -40,8 +40,8 @@ class Article {
     }
 
     data class Param constructor(private val source_: String, @RequestParam.SortBy private val sortBy_: String) {
-        val source: String?
-        val sortBy: String?
+        var source: String?
+        var sortBy: String?
 
         init {
             this.source = RequestParam.parameter(source_)

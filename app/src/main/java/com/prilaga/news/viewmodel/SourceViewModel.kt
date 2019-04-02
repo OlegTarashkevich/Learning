@@ -1,34 +1,46 @@
 package com.prilaga.news.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.prilaga.news.data.NewsRepository
 import com.prilaga.news.data.network.model.RequestParam
 import com.prilaga.news.data.network.model.Source
-import kotlinx.coroutines.*
-import java.lang.RuntimeException
 
 /**
  * Created by Oleg Tarashkevich on 28/03/2019.
  */
-class SourceViewModel(val repository: NewsRepository) : BaseViewModel() {
+class SourceViewModel(private val repository: NewsRepository) : BaseViewModel() {
 
     val sourceData = MutableLiveData<Source>()
+    private val paramObserver = Observer<Source.Param> { loadNews(it) }
 
-    fun loadNews() {
+    override fun onCreateView() {
+        // Listen for changes of Param of the Source
+        repository.sourceParam.observeForever(paramObserver)
+    }
+
+    override fun onDestroyView() {
+        repository.sourceParam.removeObserver(paramObserver)
+        super.onDestroyView()
+    }
+
+    fun loadNews(
+        @RequestParam.Category category: String?,
+        @RequestParam.Language language: String?,
+        @RequestParam.Country country: String?
+    ) {
+        val param: Source.Param = Source.Param.param(category, language, country)
+        loadNews(param)
+    }
+
+    fun loadNews(param: Source.Param) {
         doWorkIO {
             try {
-                val param = Source.param(
-                    RequestParam.Category.BUSINESS,
-                    RequestParam.Language.EN,
-                    RequestParam.Country.US
-                )
-//
-                val source = repository.getSources(param).await()
+                val source = repository.getSourcesAsync(param).await()
                 doWorkInMainThread { sourceData.value = source }
-                throw RuntimeException("test error") // for testing
+//                throw RuntimeException("test error") // for testing
 
-            } catch (e: Throwable){
+            } catch (e: Throwable) {
                 onError(e)
             }
         }

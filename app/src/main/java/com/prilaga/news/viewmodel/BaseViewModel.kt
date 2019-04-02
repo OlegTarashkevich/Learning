@@ -13,27 +13,27 @@ open class BaseViewModel : WorkViewModel(), LifecycleObserver { //, KoinComponen
 //    val repository by inject<NewsRepository>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    open fun onCreateView() {
+    protected open fun onCreateView() {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    open fun onStart() {
+    protected open fun onStart() {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    open fun onResume() {
+    protected open fun onResume() {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    open fun onPause() {
+    protected open fun onPause() {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    open fun onStop() {
+    protected open fun onStop() {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    open fun onDestroyView() {
+    protected open fun onDestroyView() {
         cancelJob()
     }
 }

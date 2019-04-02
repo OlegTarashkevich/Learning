@@ -25,13 +25,15 @@ class MainActivity : AppCompatActivity() {
 
         main_pager_container
 
-//        test_button.setOnClickListener { sourceViewModel.loadNews() }
+//        test_button.setOnClickListener {  }
 
+        // Receive the source data
         sourceViewModel.sourceData.observe(this, Observer<Source> {
 
         })
 
-        sourceViewModel.errorData.observe(this, Observer<Throwable>{
+        // Receive the error
+        sourceViewModel.errorData.observe(this, Observer<Throwable> {
             it.printStackTrace()
             Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
         })

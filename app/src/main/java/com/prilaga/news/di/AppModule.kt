@@ -6,6 +6,7 @@ import com.prilaga.news.data.network.API
 import com.prilaga.news.data.network.ApiService
 import com.prilaga.news.data.network.HeadersInterceptor
 import com.prilaga.news.data.network.RemoteDataSource
+import com.prilaga.news.viewmodel.RequestViewModel
 import com.prilaga.news.viewmodel.SourceViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit
 // region Repository
 val mvvmModule = module {
     viewModel { SourceViewModel(get()) }
+    viewModel { RequestViewModel(get()) }
 }
 // endregion
 

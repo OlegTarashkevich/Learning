@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import com.sonejka.news.R;
+import com.prilaga.news.R;
 
 /**
  * Created by Oleg Tarashkevich on 02.04.17.
