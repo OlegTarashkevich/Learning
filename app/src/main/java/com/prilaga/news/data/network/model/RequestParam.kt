@@ -95,14 +95,13 @@ object RequestParam {
     }
 
     fun parameter(parameter: String?): String? {
-        return if (!TextUtils.isEmpty(parameter) && parameter.equals(
-                RequestParam.ALL,
-                ignoreCase = true
-            )
-        ) null else parameter
+        return if (!TextUtils.isEmpty(parameter) &&
+            parameter.equals(RequestParam.ALL, ignoreCase = true)
+        ) null
+        else parameter
     }
 
-    fun defaultParam(parameter: String): String {
-        return if (TextUtils.isEmpty(parameter)) RequestParam.ALL else parameter
+    fun defaultParam(parameter: String?): String {
+        return if (TextUtils.isEmpty(parameter)) RequestParam.ALL else parameter!!
     }
 }

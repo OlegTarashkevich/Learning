@@ -3,13 +3,14 @@ package com.prilaga.news.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.prilaga.news.data.NewsRepository
+import com.prilaga.news.data.ParamsObservable
 import com.prilaga.news.data.network.model.RequestParam
 import com.prilaga.news.data.network.model.Source
 
 /**
  * Created by Oleg Tarashkevich on 28/03/2019.
  */
-class SourceViewModel(private val repository: NewsRepository) : BaseViewModel() {
+class SourceViewModel(private val repository: NewsRepository) : BaseViewModel(), ParamsObservable by repository {
 
     val sourceData = MutableLiveData<Source>()
     private val paramObserver = Observer<Source.Param> { loadNews(it) }

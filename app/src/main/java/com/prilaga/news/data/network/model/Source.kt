@@ -34,7 +34,7 @@ class Source {
     }
 
     data class Param constructor(
-        @RequestParam.Category var category_: String? = RequestParam.ALL,
+        @RequestParam.Category private var category_: String? = RequestParam.ALL,
         @RequestParam.Language private var language_: String? = RequestParam.ALL,
         @RequestParam.Country private var country_: String? = RequestParam.ALL
     ) : BaseSettings() {
@@ -42,6 +42,10 @@ class Source {
         var category: String? = RequestParam.parameter(category_)
         var language: String? = RequestParam.parameter(language_)
         var country: String? = RequestParam.parameter(country_)
+
+        override fun init() {
+            super.init()
+        }
 
         override fun loadDefault() {
             this.category = RequestParam.ALL

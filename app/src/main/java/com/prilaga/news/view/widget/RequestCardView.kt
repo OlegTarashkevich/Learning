@@ -15,6 +15,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import com.prilaga.news.R
 import com.prilaga.news.data.network.API
+import com.prilaga.news.data.network.model.RequestParam
+import com.prilaga.news.data.network.model.Source
 import com.prilaga.news.util.ViewUtil
 import com.prilaga.news.view.adapter.RequestAdapter
 import com.prilaga.news.viewmodel.SourceViewModel
@@ -40,6 +42,14 @@ class RequestCardView @JvmOverloads constructor(context: Context, attrs: Attribu
     init {
         lifecycle.addObserver(sourceViewUtil)
         View.inflate(context, R.layout.cardview_request, this)
+        populateViews()
+    }
+
+    private fun populateViews() {
+        val param: Source.Param = sourceViewUtil.sourceParam.value!!
+        setupFiled(category_edit_text, RequestParam.categories, RequestParam.defaultParam(param.category))
+        setupFiled(language_edit_text, RequestParam.languages, RequestParam.defaultParam(param.language))
+        setupFiled(country_edit_text, RequestParam.countries, RequestParam.defaultParam(param.country))
     }
 
     fun setApi(api: API) {
@@ -70,7 +80,7 @@ class RequestCardView @JvmOverloads constructor(context: Context, attrs: Attribu
         editText.setText(value)
         editText.inputType = InputType.TYPE_NULL
 
-        editText.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        editText.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
             val item = (parent.adapter as RequestAdapter).getItem(position)
             editText.setText(item)
             sourceViewUtil.loadNews(category, language, country)

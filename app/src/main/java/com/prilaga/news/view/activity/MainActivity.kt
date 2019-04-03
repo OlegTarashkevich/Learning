@@ -39,4 +39,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    override fun onDestroy() {
+        lifecycle.removeObserver(sourceViewModel)
+        super.onDestroy()
+    }
 }
