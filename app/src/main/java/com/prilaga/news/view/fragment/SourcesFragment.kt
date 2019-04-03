@@ -31,19 +31,9 @@ class SourcesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         page_recycler_view!!.layoutManager = LinearLayoutManager(context)
         page_recycler_view!!.adapter = adapter
-
-        // For testing
-        //        onDataLoadEvent(Source.param());
-        //        onDataLoadEvent(Source.param(RequestParam.Category.BUSINESS, RequestParam.Language.EN, RequestParam.Country.US));
-    }
-
-    override fun onResume() {
-        super.onResume()
-        lifecycle.addObserver(sourceViewModel)
-
-        // Receive the source data
+        lifecycle.addObserver(sourceViewModel)   // Receive the source data
         sourceViewModel.sourceData.observe(this, Observer<Source> {
-
+            updateRecycleView(it)
         })
 
         // Receive the error
@@ -51,11 +41,10 @@ class SourcesFragment : BaseFragment() {
             it.printStackTrace()
             Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
         })
-    }
 
-    override fun onPause() {
-        super.onPause()
-        lifecycle.removeObserver(sourceViewModel)
+//        For testing
+//        onDataLoadEvent(Source.param());
+//        onDataLoadEvent(Source.param(RequestParam.Category.BUSINESS, RequestParam.Language.EN, RequestParam.Country.US));
     }
 
     // region INewsView

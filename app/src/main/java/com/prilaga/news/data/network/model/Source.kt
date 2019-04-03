@@ -34,9 +34,9 @@ class Source {
     }
 
     data class Param constructor(
-        @RequestParam.Category private var category_: String? = RequestParam.ALL,
-        @RequestParam.Language private var language_: String? = RequestParam.ALL,
-        @RequestParam.Country private var country_: String? = RequestParam.ALL
+        @RequestParam.Category private var category_: String? = null,
+        @RequestParam.Language private var language_: String? = null,
+        @RequestParam.Country private var country_: String? = null
     ) : BaseSettings() {
 
         var category: String? = RequestParam.parameter(category_)
@@ -60,9 +60,9 @@ class Source {
         }
 
         override fun deserialize(jsonObject: JSONObject) {
-            category = jsonObject.optString("category", RequestParam.ALL)
-            language = jsonObject.optString("language", RequestParam.ALL)
-            country = jsonObject.optString("country", RequestParam.ALL)
+            category = jsonObject.optString("category")
+            language = jsonObject.optString("language")
+            country = jsonObject.optString("country")
         }
 
         override fun classKey(): String {
