@@ -1,11 +1,46 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
+<!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorControlNormal">@color/primary</item>
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="colorControlHighlight">@color/primary</item>
+
+        <item name="android:color">@color/primary</item>
+        <item name="android:colorBackground">@color/primary_light</item>
+
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
+
+        <!--<item name="android:textColor">@color/primary_text</item>-->
+        <!--<item name="android:editTextColor">@color/primary_text</item>-->
+
+        <!--change global color button-->
+        <item name="colorButtonNormal">@color/primary_light</item>
+
+        <item name="android:textColorHint">@color/hint_color</item>
+
+        <item name="android:textColorHighlight">@color/primary</item>
+        <!--<item name="textColorError">@color/red</item>-->
+        <item name="android:textColorLink">@color/green_dark</item>
+
+        <item name="autoCompleteTextViewStyle">@style/Auto</item>
+        <item name="android:autoCompleteTextViewStyle">@style/Auto</item>
+
+        <item name="android:textViewStyle">@style/Widget.TextView</item>
+
+        <item name="android:buttonStyle">@style/Widget.Button</item>
+        <item name="buttonStyle">@style/Widget.Button</item>
+
+        <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">@style/Widget.DialogPicker</item>
+        <item name="android:timePickerDialogTheme" tools:targetApi="lollipop">@style/Widget.DialogPicker</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
