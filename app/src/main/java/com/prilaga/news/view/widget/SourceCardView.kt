@@ -100,7 +100,7 @@ class SourceCardView @JvmOverloads constructor(context: Context, attrs: Attribut
             cardSelection?.onSelected(it)
 
             @RequestParam.SortBy val sortBy = ListUtil.getFirst(mEntry!!.sortBysAvailable)
-//            EventBus.getDefault().post(Article.param(mEntry!!.id, sortBy))
+//            EventBus.getDefault().post(Article.createParam(mEntry!!.id, sortBy))
         }
     }
 

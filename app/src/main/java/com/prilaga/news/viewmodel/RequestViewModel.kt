@@ -1,6 +1,7 @@
 package com.prilaga.news.viewmodel
 
 import com.prilaga.news.data.NewsRepository
+import com.prilaga.news.data.network.model.Article
 import com.prilaga.news.data.network.model.RequestParam
 import com.prilaga.news.data.network.model.Source
 
@@ -16,8 +17,12 @@ class RequestViewModel(private val repository: NewsRepository) : BaseViewModel()
         @RequestParam.Language language: String?,
         @RequestParam.Country country: String?
     ) {
-        val param: Source.Param = Source.Param.param(category, language, country)
+        val param: Source.Param = Source.createParam(category, language, country)
         repository.sourceParam.value = param
     }
 
+    fun createArticleRequest(source: String, @RequestParam.SortBy sortBy: String) {
+        val param: Article.Param = Article.createParam(source, sortBy)
+        repository.articleParam.value = param
+    }
 }

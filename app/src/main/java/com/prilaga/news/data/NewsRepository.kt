@@ -26,6 +26,7 @@ class NewsRepository(val remoteDataSource: RemoteDataSource) : NewsDataSource {
 //    }
 
     init {
+        // Load the history
         val param = Source.Param()
         sourceParam.value = param
     }

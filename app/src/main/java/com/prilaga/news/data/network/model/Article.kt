@@ -53,7 +53,7 @@ class Article {
 
         val dateAndTimeFormat = SimpleDateFormatThreadSafe("MMMM dd yyy, hh:mm:ss", Locale.getDefault())
 
-        fun param(source: String, @RequestParam.SortBy sortBy: String): Param {
+        fun createParam(source: String, @RequestParam.SortBy sortBy: String): Param {
             return Param(source, sortBy)
         }
     }

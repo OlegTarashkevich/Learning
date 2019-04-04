@@ -35,8 +35,8 @@ class SourcesFragment : BaseFragment() {
         page_recycler_view!!.adapter = adapter
 
 //        For testing
-//        onDataLoadEvent(Source.param());
-//        onDataLoadEvent(Source.param(RequestParam.Category.BUSINESS, RequestParam.Language.EN, RequestParam.Country.US));
+//        onDataLoadEvent(Source.createParam());
+//        onDataLoadEvent(Source.createParam(RequestParam.Category.BUSINESS, RequestParam.Language.EN, RequestParam.Country.US));
 
         lifecycle.addObserver(sourceViewModel)   // Receive the source data
         sourceViewModel.sourceData.observe(this, Observer {
@@ -54,7 +54,7 @@ class SourcesFragment : BaseFragment() {
     // region INewsView
     fun onDataLoadEvent(param: Source.Param) {
         adapter.clear()
-//        sourcePresenter!!.loadData(param)
+//        sourcePresenter!!.loadData(createParam)
     }
 
     fun onStartLoading() {

@@ -71,18 +71,22 @@ class Source {
 
         companion object {
             val TAG = "Source.Param"
+        }
+    }
 
-            fun emptyParam(): Param {
-                return param(null, null, null)
-            }
+    companion object {
+        val TAG = "Source.Param"
 
-            fun defaultParam(): Param {
-                return param(RequestParam.ALL, RequestParam.ALL, RequestParam.ALL)
-            }
+        fun emptyParam(): Param {
+            return createParam(null, null, null)
+        }
 
-            fun param(@RequestParam.Category category: String?, @RequestParam.Language language: String?, @RequestParam.Country country: String?): Param {
-                return Param(category, language, country)
-            }
+        fun defaultParam(): Param {
+            return createParam(RequestParam.ALL, RequestParam.ALL, RequestParam.ALL)
+        }
+
+        fun createParam(@RequestParam.Category category: String?, @RequestParam.Language language: String?, @RequestParam.Country country: String?): Param {
+            return Param(category, language, country)
         }
     }
 

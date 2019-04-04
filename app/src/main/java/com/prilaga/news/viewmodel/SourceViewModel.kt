@@ -14,7 +14,7 @@ class SourceViewModel(private val repository: NewsRepository) : BaseViewModel() 
 
     val sourceData = MutableLiveData<Source>()
 
-    private val paramObserver = Observer<Source.Param> { loadNews(it) }
+    private val paramObserver = Observer<Source.Param> { loadSources(it) }
 
     /**
      * Listen for changes of Param of the Source
@@ -28,7 +28,7 @@ class SourceViewModel(private val repository: NewsRepository) : BaseViewModel() 
         super.onDestroyView()
     }
 
-    fun loadNews(param: Source.Param) {
+    private fun loadSources(param: Source.Param) {
         doWorkIO {
             try {
                 val source = repository.getSourcesAsync(param).await()

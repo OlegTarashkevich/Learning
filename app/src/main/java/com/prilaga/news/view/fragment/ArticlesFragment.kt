@@ -27,8 +27,8 @@ class ArticlesFragment : BaseFragment(), INewsView<Article, Article.Param> {
         page_recycler_view!!.adapter = adapter
 //        articlePresenter!!.setView(this)
         // For testing
-        //        onDataLoadEvent(Article.param());
-        //        onDataLoadEvent(Article.param("the-next-web", RequestParam.SortBy.LATEST));
+        //        onDataLoadEvent(Article.createParam());
+        //        onDataLoadEvent(Article.createParam("the-next-web", RequestParam.SortBy.LATEST));
     }
 
     override fun onResume() {
@@ -46,7 +46,7 @@ class ArticlesFragment : BaseFragment(), INewsView<Article, Article.Param> {
 //    @Subscribe
     override fun onDataLoadEvent(param: Article.Param) {
         adapter!!.clear()
-//        articlePresenter!!.loadData(param)
+//        articlePresenter!!.loadData(createParam)
     }
 
     override fun onStartLoading() {
