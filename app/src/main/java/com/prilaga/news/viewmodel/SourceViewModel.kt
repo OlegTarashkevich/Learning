@@ -3,20 +3,23 @@ package com.prilaga.news.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.prilaga.news.data.NewsRepository
-import com.prilaga.news.data.ParamsObservable
-import com.prilaga.news.data.network.model.RequestParam
 import com.prilaga.news.data.network.model.Source
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Created by Oleg Tarashkevich on 28/03/2019.
  */
-class SourceViewModel(private val repository: NewsRepository) : BaseViewModel(), ParamsObservable by repository {
+class SourceViewModel(private val repository: NewsRepository) : BaseViewModel() {
 
     val sourceData = MutableLiveData<Source>()
+
     private val paramObserver = Observer<Source.Param> { loadNews(it) }
 
+    /**
+     * Listen for changes of Param of the Source
+     */
     override fun onCreateView() {
-        // Listen for changes of Param of the Source
         repository.sourceParam.observeForever(paramObserver)
     }
 
@@ -25,22 +28,11 @@ class SourceViewModel(private val repository: NewsRepository) : BaseViewModel(),
         super.onDestroyView()
     }
 
-    fun loadNews(
-        @RequestParam.Category category: String?,
-        @RequestParam.Language language: String?,
-        @RequestParam.Country country: String?
-    ) {
-        val param: Source.Param = Source.Param.param(category, language, country)
-        loadNews(param)
-    }
-
     fun loadNews(param: Source.Param) {
         doWorkIO {
             try {
                 val source = repository.getSourcesAsync(param).await()
-                doWorkInMainThread { sourceData.value = source }
-//                throw RuntimeException("test error") // for testing
-
+                withContext(Dispatchers.Main) { sourceData.value = source }
             } catch (e: Throwable) {
                 onError(e)
             }

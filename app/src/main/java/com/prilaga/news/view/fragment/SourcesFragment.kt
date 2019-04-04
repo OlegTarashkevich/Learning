@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.prilaga.data.utils.Logger
 import com.prilaga.news.R
 import com.prilaga.news.data.network.model.Source
 import com.prilaga.news.view.adapter.SourceRecyclerAdapter
@@ -22,6 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SourcesFragment : BaseFragment() {
 
     private val sourceViewModel: SourceViewModel by viewModel()
+
     internal var adapter = SourceRecyclerAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,20 +33,22 @@ class SourcesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         page_recycler_view!!.layoutManager = LinearLayoutManager(context)
         page_recycler_view!!.adapter = adapter
-        lifecycle.addObserver(sourceViewModel)   // Receive the source data
-        sourceViewModel.sourceData.observe(this, Observer<Source> {
-            updateRecycleView(it)
-        })
-
-        // Receive the error
-        sourceViewModel.errorData.observe(this, Observer<Throwable> {
-            it.printStackTrace()
-            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
-        })
 
 //        For testing
 //        onDataLoadEvent(Source.param());
 //        onDataLoadEvent(Source.param(RequestParam.Category.BUSINESS, RequestParam.Language.EN, RequestParam.Country.US));
+
+        lifecycle.addObserver(sourceViewModel)   // Receive the source data
+        sourceViewModel.sourceData.observe(this, Observer {
+            Logger.separator()
+            updateRecycleView(it)
+        })
+
+        // Receive the error
+        sourceViewModel.errorData.observe(this, Observer {
+            it.printStackTrace()
+//            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+        })
     }
 
     // region INewsView

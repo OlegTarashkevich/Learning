@@ -9,19 +9,21 @@ import kotlinx.coroutines.Deferred
 /**
  * Created by Oleg Tarashkevich on 27/03/2019.
  */
-class NewsRepository(val remoteDataSource: RemoteDataSource) : ParamsObservable, NewsDataSource {
+class NewsRepository(val remoteDataSource: RemoteDataSource) : NewsDataSource {
 
     // region ParamsObservable
-    override val articleParam: MutableLiveData<Article.Param> = MutableLiveData()
-    override var sourceParam: MutableLiveData<Source.Param> = object : MutableLiveData<Source.Param>() {
-        override fun postValue(value: Source.Param) {
-            super.postValue(value)
-        }
-
-        override fun setValue(value: Source.Param) {
-            super.setValue(value)
-        }
-    }
+     val articleParam: MutableLiveData<Article.Param> = MutableLiveData()
+     val sourceParam: MutableLiveData<Source.Param> = MutableLiveData()
+    
+//    override var sourceParam: MutableLiveData<Source.Param> = object : MutableLiveData<Source.Param>() {
+//        override fun postValue(value: Source.Param) {
+//            super.postValue(value)
+//        }
+//
+//        override fun setValue(value: Source.Param) {
+//            super.setValue(value)
+//        }
+//    }
 
     init {
         val param = Source.Param()
