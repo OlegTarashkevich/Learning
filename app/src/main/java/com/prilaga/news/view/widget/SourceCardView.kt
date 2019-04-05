@@ -3,45 +3,37 @@ package com.prilaga.news.view.widget
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.prilaga.data.utils.ListUtil
 import com.prilaga.data.utils.Logger
 import com.prilaga.news.R
-import com.prilaga.news.data.network.model.Article
 import com.prilaga.news.data.network.model.RequestParam
 import com.prilaga.news.data.network.model.Source
-import com.prilaga.news.util.TextUtil
+import com.prilaga.news.viewmodel.RequestViewModel
 import kotlinx.android.synthetic.main.cardview_source.view.*
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 /**
  * Created by Oleg Tarashkevich on 01.04.17.
  */
 
 class SourceCardView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    CardView(context, attrs, defStyleAttr), View.OnClickListener {
+    CardView(context, attrs, defStyleAttr), View.OnClickListener, LifecycleOwner, KoinComponent {
 
-//    @BindView(R.id.source_logo_view)
-//    internal var logoImageView: ImageView? = null
-//    @BindView(R.id.source_name_text_view)
-//    internal var nameTextView: TextView? = null
-//    @BindView(R.id.source_description_text_view)
-//    internal var descriptionTextView: TextView? = null
-//    @BindView(R.id.source_url_text_view)
-//    internal var urlTextView: TextView? = null
-
-    internal val logoSize: Int
-        get() = context.resources.getDimension(R.dimen.z_size).toInt()
-    internal val primaryLight: Int
-        get() = ContextCompat.getColor(context, R.color.primary_light)
-    val options: RequestOptions by lazy {
+    private val mLifecycleRegistry = LifecycleRegistry(this)
+    private val requestViewModel: RequestViewModel by inject()
+    private val primaryLight: Int get() = ContextCompat.getColor(context, R.color.primary_light)
+    private val options: RequestOptions by lazy {
+        val logoSize: Int = context.resources.getDimension(R.dimen.z_size).toInt()
         RequestOptions()
             .centerCrop()
             .placeholder(R.drawable.ic_newspaper)
@@ -53,6 +45,7 @@ class SourceCardView @JvmOverloads constructor(context: Context, attrs: Attribut
     var cardSelection: CardSelection? = null
 
     init {
+        mLifecycleRegistry.addObserver(requestViewModel)
         inflate(context, R.layout.cardview_source, this)
     }
 
@@ -98,13 +91,18 @@ class SourceCardView @JvmOverloads constructor(context: Context, attrs: Attribut
     override fun onClick(v: View) {
         mEntry?.let {
             cardSelection?.onSelected(it)
-
-            @RequestParam.SortBy val sortBy = ListUtil.getFirst(mEntry!!.sortBysAvailable)
-//            EventBus.getDefault().post(Article.createParam(mEntry!!.id, sortBy))
+            @RequestParam.SortBy val sortBy = ListUtil.getFirst(it.sortBysAvailable)
+            requestViewModel.createArticleRequest(it.id!!, sortBy)
         }
     }
 
     interface CardSelection {
         fun onSelected(selectedEntry: Source.Entry)
     }
+
+    // region Lifecycle
+    override fun getLifecycle(): Lifecycle {
+        return mLifecycleRegistry
+    }
+    // endregion
 }

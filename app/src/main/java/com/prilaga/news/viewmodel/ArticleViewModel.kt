@@ -17,7 +17,7 @@ class ArticleViewModel(private val repository: NewsRepository) : BaseViewModel()
     private val paramObserver = Observer<Article.Param> { loadArticles(it) }
 
     /**
-     * Listen for changes of Param of the Source
+     * Listen for changes of Param of the Article
      */
     override fun onCreateView() {
         repository.articleParam.observeForever(paramObserver)

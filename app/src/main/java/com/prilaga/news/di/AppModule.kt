@@ -6,6 +6,7 @@ import com.prilaga.news.data.network.API
 import com.prilaga.news.data.network.ApiService
 import com.prilaga.news.data.network.HeadersInterceptor
 import com.prilaga.news.data.network.RemoteDataSource
+import com.prilaga.news.util.DateJsonAdapter
 import com.prilaga.news.viewmodel.ArticleViewModel
 import com.prilaga.news.viewmodel.RequestViewModel
 import com.prilaga.news.viewmodel.SourceViewModel
@@ -16,6 +17,9 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import com.squareup.moshi.Moshi
+import java.util.*
+
 
 /**
  * Created by Oleg Tarashkevich on 27/03/2019.
@@ -78,12 +82,18 @@ fun getOkHttpClient(): OkHttpClient {
 }
 
 inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String): T {
+
+    val moshiBuilder = Moshi.Builder()
+        .add(Date::class.java, DateJsonAdapter().nullSafe())
+
     val retrofit = Retrofit.Builder()
         .baseUrl(url)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshiBuilder.build()))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(okHttpClient)
         .build()
     return retrofit.create(T::class.java)
 }
+
+
 // endregion

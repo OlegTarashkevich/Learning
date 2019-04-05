@@ -11,24 +11,24 @@ import java.util.*
 
 class Article {
 
-    private val status: String? = null
-    private val sortBy: String? = null
-    private val articles: List<Entry>? = null
+    val status: String? = null
+    val sortBy: String? = null
+    val articles: List<Entry>? = null
 
     class Entry {
-        private val author: String? = null
-        private val title: String? = null
-        private val description: String? = null
-        private val url: String? = null
-        private val urlToImage: String? = null
-        private val publishedAt: Date? = null
+        val author: String? = null
+        val title: String? = null
+        val description: String? = null
+        val url: String? = null
+        val urlToImage: String? = null
+        val publishedAt: Date? = null
 
         private var publishedDate = ""
 
         val info: String
-            get() = getAuthor() + " | " + getPublishedDate()
+            get() = getAuthor_() + " | " + getPublishedDate()
 
-        fun getAuthor(): String {
+        fun getAuthor_(): String {
             return author ?: ""
         }
 
