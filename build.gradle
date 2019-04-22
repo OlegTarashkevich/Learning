@@ -54,7 +54,7 @@ ext {
  8. Room + Coroutines
  9. LiveData
  10. Paging
- 11. ViewPager 2
+ 11. ViewPager 2 // TODO very raw !!!
  12. Android Navigation component
  13. Lifecycles
  14. WorkManager
